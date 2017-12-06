@@ -43,10 +43,40 @@ var interval,
 };
 
 countDown.start('Dec 15, 2017 00:00:00');
+// to stop: countDown.stop();
+
 
 // Part 2
 function flip(){
 	return Math.random() >= 0.5;
 }
 
-//	return Math.floor(Math.random() * 1000000) + 1;
+function randNumber(max) {
+	var array = [];
+
+	if(max > 1000000){
+		array[0]='Error';
+	} else {
+		array = (() => {
+			let arr = [];
+			for(let x = 0; x <= max; x++) {
+				if (flip()){
+					arr.push(x);
+				}
+			}
+			return arr;
+		})();
+
+		while (array.length > 1) {
+			let prevArray = array;
+			array = array.filter(() => {
+				return flip();
+			});
+			if (array.length === 0)
+				array = prevArray;
+		}
+	}
+	return array[0] || 0;
+}
+
+randNumber(1000001);
